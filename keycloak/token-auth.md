@@ -191,3 +191,5 @@ Substitute the `JWT` token in the above call (without the `<>`) and press enter.
     "username": "admin"
 }
 ```
+
+[View Published Story](https://medium.com/@usmanshahid/levels-of-access-control-through-keycloak-part-1-d29e24b0ddad)

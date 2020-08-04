@@ -1,6 +1,6 @@
 # Token Flows
 
-In the previous section, we utilized `curl` to perfrom HTTP requests to get the token. This was possible through something called a [Direct Access Grant](https://oauth.net/2/grant-types/password/) and usually, in a web application or a service, we don't want that since this involves sending plaintext username and password in a request. 
+In the previous section, we utilized `curl` to perform HTTP requests to get the token. This was possible through something called a [Direct Access Grant](https://oauth.net/2/grant-types/password/) and usually, in a web application or a service, we don't want that since this involves sending plaintext username and password in a request. 
 
 The most recommended way of getting a token for your application or service is through something called Authorization Code Flow.
 
@@ -50,14 +50,14 @@ Okay, so what just happened? The exchange of requests above is supposed to be do
 ![Authorization Code Flow](static/auth-code-flow.png)
 
 1. You open a browser and perform a `GET` call to your service
-2. Your service redirects your browser to keycloak so that it can get an authorization code. Your browser then perfroms a `GET` on keycloak
+2. Your service redirects your browser to keycloak so that it can get an authorization code. Your browser then performs a `GET` on keycloak
 3. Keycloak establishes that you're not logged in and returns a login page
 4. Once you login, keycloak redirects your browser back to the service with authorization code. Your browser performs a new `GET` call on your service with the authorization code
 5. Combining the authorization code with client credentials, your service performs a `POST` call. This establishes the identity of your service and returns an access token
 
 This is the standard [OAuth2 Authorization Code Flow](https://oauth.net/2/grant-types/authorization-code/) which a lot of modern apps and services use for different purposes. For example, wherever you see the button `Login with Google` or `Login with Facebook`, you're essentially using this flow where `Google` and `Facebook` are acting as the servers that provide authorization services like Keycloak. 
 
-To programatically demonstrate this, let's modify our REST API to cater for redirection as follows:
+To programmatically demonstrate this, let's modify our REST API to cater for redirection as follows:
 
 ```
 import falcon
@@ -223,3 +223,7 @@ class SelfApi(object):
     resp.body = dumps(get_user(claims))
     resp.status = falcon.HTTP_200
 ```
+
+
+
+[View Published Story](https://medium.com/@usmanshahid/levels-of-access-control-through-keycloak-part-2-authentication-flows-8ac3591984)

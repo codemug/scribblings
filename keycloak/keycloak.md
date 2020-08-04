@@ -29,6 +29,3 @@ Keycloak stores its configuration data in a JDBC supported database and when no 
 
 * **[OpenID Connect Token Authentication](token-auth.md)**
 * **[Token Flows](flows.md)**
-
-
-[View Published Story](https://medium.com/@usmanshahid/levels-of-access-control-through-keycloak-part-1-d29e24b0ddad)
