@@ -90,19 +90,19 @@ Which yields:
 
 As you can see, the value of `preferred_username` is `admin` and the value of `azp` (authorization party) is `my-test-client`. Each token also comes with an attached expiration specified as the value of `exp` after which the token should not be acceptable. 
 
-Respectively, the parts at the either ends of the `payload` are `header` and the `signature`. The `signature` is literally the digial signature of the whole payload generated through a private key and an algorithm specified in the `header`. 
+Respectively, the parts at either ends of the `payload` are `header` and the `signature`. The `signature` is literally the digtial signature of the whole payload generated through a private key and an algorithm specified in the `header`. 
 
 The main advantage of a signed `JWT` is that if you have the public key and the algorithm information, you can simply verify the signature and once the signature is verified, you can trust the information in the payload to have come from a valid source (Keycloak Server). If you can trust the payload which contains information about the logged-in user, you can establish that the holder of this token is in-fact the user who's logged in. 
 
-So, in our demo REST API, all we have to do is expect the request to contain the token. If the token is there, validate it's signature. Once the signature has been validated, we can establish the identity of the user who performed the request through `preferred_username` field. 
+So, in our demo REST API, all we have to do is expect the request to contain the token. If the token is there, validate its signature. Once the signature has been validated, we can establish the identity of the user who performed the request through `preferred_username` field. 
 
-Let's implement a REST endpoint `/v1/self` which returns the info of the logged-in user. You'd need to install the following pip packages:
+Let's implement a REST endpoint `/v1/self` that returns the info of the logged-in user. You'd need to install the following pip packages:
 
 ```
 pip install openidcpy==0.8 falcon==2.0.0 bjoern==3.1.0
 ```
 
-You'd also need someting called a `Discovery URL`, which can be found from the Keycloak Administration Console as the hyperlink value of `OpenID Endpoint Configuration`:
+You'd also need something called a `Discovery URL`, which can be found from the Keycloak Administration Console as the hyperlink value of `OpenID Endpoint Configuration`:
 
 ![Discovery URL](static/discovery.png)
 
@@ -113,18 +113,19 @@ This URL would be something like http://localhost:8080/auth/realms/test/.well-kn
     .
     .
     .
-    "userinfo_endpoint": "http://localhost:8080/auth/realms/test/protocol/openid-connect/userinfo",
-    "end_session_endpoint": "http://localhost:8080/auth/realms/test/protocol/openid-connect/logout",
+    "authorization_endpoint": "http://localhost:8080/auth/realms/test/protocol/openid-connect/auth",
+    "token_endpoint": "http://localhost:8080/auth/realms/test/protocol/openid-connect/token",
     "jwks_uri": "http://localhost:8080/auth/realms/test/protocol/openid-connect/certs",
-    "check_session_iframe": "http://localhost:8080/auth/realms/test/protocol/openid-connect/login-status-iframe.html",
+    "userinfo_endpoint": "http://localhost:8080/auth/realms/test/protocol/openid-connect/userinfo",
     .
     .
     .
+}
 ```
 
-Opening the URL specified against `jwks_uri` will give you all the public keys that this server has one of which will have the same `id` as specified in the `header` of the `JWT`. 
+Opening the URL specified against `jwks_uri` will give you all the public keys that this server has one of which will have the same `id` as specified in the `header` of the `JWT`. Other important endpoints specified here are authorization_endpoint and token_endpoint . We'll use these endpoints later on to generate tokens. 
 
-We'll need to specify this `URL` as an argument to the client from `openidcpy`. Our implementation is as follows:
+For now, we'll need to specify this `URL` as an argument to the client from `openidcpy`. Our implementation is as follows:
 
 ```
 import falcon
