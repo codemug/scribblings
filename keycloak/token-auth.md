@@ -90,7 +90,7 @@ Which yields:
 
 As you can see, the value of `preferred_username` is `admin` and the value of `azp` (authorization party) is `my-test-client`. Each token also comes with an attached expiration specified as the value of `exp` after which the token should not be acceptable. 
 
-Respectively, the parts at either ends of the `payload` are `header` and the `signature`. The `signature` is literally the digtial signature of the whole payload generated through a private key and an algorithm specified in the `header`. 
+Respectively, the parts at either ends of the `payload` are `header` and the `signature`. The `signature` is literally the digtial signature of the whole payload generated through a private key and an algorithm. The name of the algorithm and the identifier for the key-pair used to sign the payload are specified in the `header`. 
 
 The main advantage of a signed `JWT` is that if you have the public key and the algorithm information, you can simply verify the signature and once the signature is verified, you can trust the information in the payload to have come from a valid source (Keycloak Server). If you can trust the payload which contains information about the logged-in user, you can establish that the holder of this token is in-fact the user who's logged in. 
 
