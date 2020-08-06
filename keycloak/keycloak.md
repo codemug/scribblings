@@ -1,6 +1,6 @@
 # Levels of access control through Keycloak
 
-A few years ago when I was introduced to the world of microservices for the purpose of looking into token authentication, I stumbled across Keycloak. Keycloak is an open-source identity and access management service maintained by JBoss, a division of Red Hat. Keycloak comes with a plethora of features that do take some time to get familiar with. Some of these features, such as OpenID Connect, RBAC, and Authorization services are very useful for the security needs of modern microservices. This 4-part series is for those who want to rapidly ramp-up their know-how of these crucial features. We'd be covering OpenID Connect based token authentication, authorization flow, access control, and authorization services through Keycloak with example use cases. I'm going to use python for rapid prototypes and proof of concepts. 
+A few years ago when I was introduced to the world of microservices for the purpose of looking into token authentication, I stumbled across Keycloak. Keycloak is an open-source identity and access management service maintained by JBoss, a division of Red Hat. Keycloak comes with a plethora of features that do take some time to get familiar with. Some of these features, such as OpenID Connect, RBAC, and Authorization services are very useful for the security needs of modern microservices. This 4-part series is for those who want to rapidly ramp-up their know-how of these crucial features. We'd be covering token based authentication, authorization flow, access control, and authorization services through Keycloak with example use cases. I'm going to use python for rapid prototypes and proof of concepts. 
 
 ## The Setup
 
@@ -27,5 +27,5 @@ Keycloak stores its configuration data in a JDBC supported database and when no 
 
 ## Guides
 
-* **[OpenID Connect Token Authentication](token-auth.md)**
+* **[Token Based Authentication](token-auth.md)**
 * **[Token Flows](flows.md)**

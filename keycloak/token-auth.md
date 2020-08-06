@@ -1,4 +1,4 @@
-# OpenID Connect Token Authentication
+# Token Based Authentication
 
 I'm going to start with building a REST server in python using [falcon](https://github.com/falconry/falcon). We want the REST API to be only accessible to authenticated users from Keycloak. To achieve this, we need to create a client entity in keycloak. We can do this by clicking on `Clients` and then clicking on `Create` button
 
@@ -88,7 +88,7 @@ Which yields:
 }
 ```
 
-As you can see, the value of `preferred_username` is `admin` and the value of `azp` (authorization party) is `my-test-client`. Each token also comes with an attached expiration specified as the value of `exp` after which the token should not be acceptable. 
+As you can see, the value of `preferred_username` is `admin` and the value of `azp` (authorization party) is `my-test-client`. Normally, a JWT can have any key-value pairs, but the ones returned in this one by Keycloak are special. The keys `iss`, `sub`, `aud`, `exp`, `iat`, `acr`, and `azp` are part of a standard called [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html#IDToken). The `exp` value is an attached expiration with the token after which it should be considered invalid.  
 
 Respectively, the parts at either ends of the `payload` are `header` and the `signature`. The `signature` is literally the digtial signature of the whole payload generated through a private key and an algorithm. The name of the algorithm and the identifier for the key-pair used to sign the payload are specified in the `header`. 
 
