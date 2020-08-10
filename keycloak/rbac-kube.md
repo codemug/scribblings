@@ -76,6 +76,8 @@ These configuration changes are done to the command-line parameters of the `kube
 
 Once these parameters are configured, restart the `kube-apiserver` container. 
 
+NOTE: There's a slight gotcha here. Your locally running Keycloak won't be accessible to the components of a Kubernetes cluster running somewhere else if you specify the value of `--oidc-issuer-url` to something containing `localhost`. You have to provide a URL with the IP address of your machine instead of `localhost`. 
+
 ## Kubectl configuration
 
 `kubectl` is the CLI tool to administer a kubernetes cluster. You need to have [kubectl installed](https://kubernetes.io/docs/tasks/tools/install-kubectl/) for this. Inherently, it does not support OpenID Connect Token Authentication, but there's a plugin called [kubelogin](https://github.com/int128/kubelogin) that we can use to add its support so go ahead and [install this plugin too](https://github.com/int128/kubelogin#setup). 
@@ -95,7 +97,7 @@ kubectl config set-credentials oidc --exec-api-version=client.authentication.k8s
           --exec-arg=--oidc-client-secret=<PUT CLIENT SECRET HERE>
 ```
 
-The value of `--oidc-issuer-url` need to be the value against the `iss` claim in the token, while the value of `--oidc-client-secret` needs to be the `Secret` we saved before when we were creating the client in Keycloak. 
+The value of `--oidc-issuer-url` need to be the value against the `iss` claim in the token but with the IP address of your machine as specified before, while the value of `--oidc-client-secret` needs to be the `Secret` we saved before when we were creating the client in Keycloak. 
 
 2. Create a new cluster through the following command:
 
