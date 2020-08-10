@@ -63,12 +63,12 @@ kubectl apply -f oidc-cluster-admin.yaml
 
 Kubernetes is not a single service or an app. It's a bunch of services that are run together. These services communicate with each other to achieve the features of Kubernetes. Normally, these services are classified as part of either the control plane of kubernetes or worker nodes, where the worker nodes host the actual workloads while the control plane manages these worker nodes. One such service that is part of the control plane is `kube-apiserver`. Whenever a user tries to interact with a Kubernetes, they do so by communicating with `kube-apiserver` over a [REST API](https://kubernetes.io/docs/reference/). So naturally, this is the component that handles authentication and access control. To allow this integration, we'd need to do some configuration changes to this component. 
 
-For this, we need to locate the `kube-apiserver` process whic is usually run inside a container and figure out how it's being run. Usually, `kube-apiserver` container is deployed as a [static pod](https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/) or a systemd service. For example, [kubespray](https://github.com/kubernetes-sigs/kubespray) usually deploys it as a static pod by creating a manifest in `/etc/kubernetes/manifests` by the name of `kube-apiserver.yaml`. 
+For this, we need to locate the `kube-apiserver` process which is usually run inside a container and figure out how it's being run. Usually, `kube-apiserver` container is deployed as a [static pod](https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/) or a systemd service. For example, [kubespray](https://github.com/kubernetes-sigs/kubespray) usually deploys it as a static pod by creating a manifest in `/etc/kubernetes/manifests` by the name of `kube-apiserver.yaml`. 
 
 These configuration changes are done to the command-line parameters of the `kube-apiserver` executable. Specifically, we need to add/update the following parameters:
 
 * `--oidc-client-id`: Set it to `apiserver`
-* `--oidc-groups-claim`: Set it to `client_roles` or whater value you set against the `Token Claim Name` when you configured the mapper
+* `--oidc-groups-claim`: Set it to `client_roles` or whatever value you set against the `Token Claim Name` when you configured the mapper
 * `--oidc-issuer-url`: This can be figured out from the token payload. It's the value of the `iss` claim. For our locally running keycloak, this should be `http://localhost:8080/auth/realms/system`
 * `--oidc-username-claim`: The claim against which the username of the logged-in user is given. In one of the previous guides, we figured out that it's given against `preferred_username`
 * `--oidc-username-prefix`: Optional, but good practice so that the usernames that come from Keycloak do not conflate with the existing users. Set it to `oidc:`
@@ -128,4 +128,4 @@ Run any `kubectl` command:
 kubectl cluster-info
 ```
 
-This is going to open a login page on keycloak. Use the `admin` credentials to log-in. Previously, we assigned the this user the `cluster-admin` client role which we then mapped to `cluster-admin` `ClusterRole` through a `ClusterRoleBinding` so `admin` should have full access to the cluster. 
+This is going to open a login page on keycloak. Use the `admin` credentials to log-in. Previously, we assigned this user the `cluster-admin` client role which we then mapped to `cluster-admin` `ClusterRole` through a `ClusterRoleBinding` so `admin` should have full access to the cluster. 
