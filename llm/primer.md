@@ -135,10 +135,10 @@ messages (the transport layer) can vary. MCP standardizes three ways for them to
       client, one server it directly controls.
     * **Analogy:** Like two programs on your laptop whispering directly to each other.
 
-* **Server-Side Events (SSE):**
+* **Server-Sent Events (SSE):**
     * **What it is:** This is an HTTP-based method. Your MCP client sends a request (usually an HTTP POST) to a running
-      MCP server (which could be anywhere on a network). The server then "streams" responses back using a special format
-      called `text/event-stream`.
+      MCP server (which could be anywhere on a network). The server then "streams" responses back
+      using [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events).
     * **Best for:** Hosted MCP servers that many different clients might want to connect to. The server can push updates
       to the client without the client constantly asking.
     * **Analogy:** Like subscribing to a news feed; the server sends you updates as they happen.
