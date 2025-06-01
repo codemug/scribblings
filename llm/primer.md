@@ -1,4 +1,4 @@
-# LLMs Calling the Shots: Understanding Tool Calling and the Model Context Protocol (MCP)
+# LLM Tool Calls Series [Part 1]: Understanding Tool Calling and the Model Context Protocol (MCP)
 
 So, unless you've been chilling under a particularly soundproof rock, you've probably heard that the new cool kid on the
 block is hooking up your software and systems with Large Language Models (LLMs). Why? To give these AI brains the power
@@ -65,22 +65,17 @@ The LLM then takes that and replies to you: "The current time in London is 3:00 
 Here's a simplified flow:
 
 ```mermaid
----
-config:
-  theme: redux-color
-  look: classic
----
 sequenceDiagram
     participant User
     participant LLM
     participant Agent_Code_Your_Program
     participant Actual_Tool_e.g._Time_API
     User->>LLM: "What's the time in London?"
-    LLM->>Agent_Code_Your_Program: Identifies need for tool, responds with: __TOOL_CALL_INTENT__: {"tool_name": "get_current_time", "inputs": {"location": "London"}}
+    LLM->>Agent_Code_Your_Program: Identifies tool need, responds with specified format
     Agent_Code_Your_Program->>Agent_Code_Your_Program: Parses the LLM's intent
     Agent_Code_Your_Program->>Actual_Tool_e.g._Time_API: Executes get_current_time(location="London")
     Actual_Tool_e.g._Time_API-->>Agent_Code_Your_Program: Returns "3:00 PM"
-    Agent_Code_Your_Program->>LLM: Sends tool result: "Tool 'get_current_time' returned: 3:00 PM"
+    Agent_Code_Your_Program->>LLM: Sends tool result: "3:00 PM"
     LLM->>User: "The current time in London is 3:00 PM."
 
 ```
