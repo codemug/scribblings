@@ -1,4 +1,4 @@
-# LLM Tool Calls Series [Part 1]: Understanding Tool Calling and the Model Context Protocol (MCP)
+# LLM Tool Calling Series [Part 1]: Understanding Tool Calling and the Model Context Protocol (MCP)
 
 So, unless you've been chilling under a particularly soundproof rock, you've probably heard that the new cool kid on the
 block is hooking up your software and systems with Large Language Models (LLMs). Why? To give these AI brains the power
